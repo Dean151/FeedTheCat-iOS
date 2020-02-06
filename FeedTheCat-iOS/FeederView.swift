@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  FeederView.swift
 //  FeedTheCat-iOS
 //
 //  Created by Thomas DURAND on 06/02/2020.
@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct FeederView: View {
-    @Binding var isActive: Bool
+    @Binding var isReachable: Bool
 
     private let mainColor = Color("MainFeeder")
     private let secondColor = Color("SecondaryFeeder")
@@ -17,7 +17,7 @@ struct FeederView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            VStack(spacing: 6) {
+            VStack(spacing: proxy.size.height * 0.005) {
                 self.top.frame(height: proxy.size.height * 0.4)
                 self.middle.frame(height: proxy.size.height * 0.1)
                 self.bottom.frame(height: proxy.size.height * 0.45)
@@ -42,7 +42,6 @@ struct FeederView: View {
                 self.indicators
                     .frame(width: proxy.size.width * 0.3, height: proxy.size.height * 0.4)
                     .offset(y: -proxy.size.height * 0.2)
-
                 self.button
                     .frame(height: proxy.size.height * 0.25)
                     .offset(y: proxy.size.height * 0.25)
@@ -52,7 +51,7 @@ struct FeederView: View {
 
     private var bottom: some View {
         GeometryReader { proxy in
-            VStack(spacing: 2) {
+            VStack(spacing: proxy.size.height * 0.0075) {
                 ZStack {
                     self.top
                     self.drawer
@@ -72,22 +71,49 @@ struct FeederView: View {
             Path { path in
                 let frame = proxy.frame(in: .local)
                 let amount = frame.width * 0.035
-                path.move(to: frame.origin)
-                path.addLine(to: .init(x: frame.origin.x + amount, y: frame.size.height / 2))
-                path.addLine(to: .init(x: frame.origin.x, y: frame.size.height))
+                path.move(to: .zero)
+                path.addLine(to: .init(x: amount, y: frame.size.height / 2))
+                path.addLine(to: .init(x: 0, y: frame.size.height))
                 path.addLine(to: .init(x: frame.size.width, y: frame.size.height))
                 path.addLine(to: .init(x: frame.size.width - amount, y: frame.size.height / 2))
-                path.addLine(to: .init(x: frame.size.width, y: frame.origin.y))
+                path.addLine(to: .init(x: frame.size.width, y: 0))
             }
             .fill(self.thirdColor)
         }
     }
 
     private var indicators: some View {
-        ZStack {
-            Rectangle()
-                .fill(self.mainColor)
+        GeometryReader { proxy in
+            ZStack {
+                self.indicatorBackground
+                self.indicator(color: .red, proxy: proxy, isActive: self.isReachable)
+                    .offset(x: -proxy.size.width * 0.25)
+                self.indicator(color: .green, proxy: proxy, isActive: self.isReachable)
+                    .offset(x: proxy.size.width * 0.25)
+            }
         }
+    }
+
+    private var indicatorBackground: some View {
+        GeometryReader { proxy in
+            Path { path in
+                let frame = proxy.frame(in: .local)
+                let amount = frame.width * 0.15
+                path.move(to: .zero)
+                path.addQuadCurve(to: .init(x: amount, y: frame.size.height), control: .init(x: 0, y: frame.size.height))
+                path.addLine(to: .init(x: frame.size.width - amount, y: frame.size.height))
+                path.addQuadCurve(to: .init(x: frame.size.width, y: 0), control: .init(x: frame.size.width, y: frame.size.height))
+            }
+            .fill(self.mainColor)
+        }
+    }
+
+    private func indicator(color: Color, proxy: GeometryProxy, isActive: Bool) -> some View {
+        Circle()
+            .fill(color)
+            .frame(height: proxy.size.height * 0.2)
+            .shadow(color: color, radius: isActive ? proxy.size.height * 0.15 : 0, x: 0, y: 0)
+            .brightness(isActive ? 0 : -0.4)
     }
 
     private var button: some View {
@@ -105,20 +131,18 @@ struct FeederView: View {
     }
 
     private var foot: some View {
-        GeometryReader { proxy in
-            RoundedRectangle(cornerRadius: proxy.size.height / 2)
-                .fill(self.secondColor)
-        }
+        Capsule()
+            .fill(self.secondColor)
     }
 }
 
 struct FeederView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeederView(isActive: .constant(false))
+            FeederView(isReachable: .constant(false))
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
-            FeederView(isActive: .constant(true))
+            FeederView(isReachable: .constant(true))
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
         }
