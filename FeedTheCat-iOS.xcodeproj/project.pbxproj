@@ -13,6 +13,7 @@
 		714DF13F23EC2EC40035AFB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 714DF13E23EC2EC40035AFB7 /* Assets.xcassets */; };
 		714DF14223EC2EC40035AFB7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 714DF14123EC2EC40035AFB7 /* Preview Assets.xcassets */; };
 		714DF14523EC2EC40035AFB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714DF14323EC2EC40035AFB7 /* LaunchScreen.storyboard */; };
+		E9EF28C223F0A0CF00767A5D /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EF28C123F0A0CF00767A5D /* FeedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		714DF14123EC2EC40035AFB7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		714DF14423EC2EC40035AFB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		714DF14623EC2EC40035AFB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9EF28C123F0A0CF00767A5D /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,9 +58,8 @@
 		714DF13723EC2EC30035AFB7 /* FeedTheCat-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				714DF13823EC2EC30035AFB7 /* AppDelegate.swift */,
-				714DF13A23EC2EC30035AFB7 /* SceneDelegate.swift */,
-				714DF13C23EC2EC30035AFB7 /* FeederView.swift */,
+				E9EF28C023F0A03C00767A5D /* Lifecycle */,
+				E9EF28BF23F0A03000767A5D /* View */,
 				714DF13E23EC2EC40035AFB7 /* Assets.xcassets */,
 				714DF14323EC2EC40035AFB7 /* LaunchScreen.storyboard */,
 				714DF14623EC2EC40035AFB7 /* Info.plist */,
@@ -73,6 +74,24 @@
 				714DF14123EC2EC40035AFB7 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E9EF28BF23F0A03000767A5D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E9EF28C123F0A0CF00767A5D /* FeedView.swift */,
+				714DF13C23EC2EC30035AFB7 /* FeederView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E9EF28C023F0A03C00767A5D /* Lifecycle */ = {
+			isa = PBXGroup;
+			children = (
+				714DF13823EC2EC30035AFB7 /* AppDelegate.swift */,
+				714DF13A23EC2EC30035AFB7 /* SceneDelegate.swift */,
+			);
+			path = Lifecycle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9EF28C223F0A0CF00767A5D /* FeedView.swift in Sources */,
 				714DF13923EC2EC30035AFB7 /* AppDelegate.swift in Sources */,
 				714DF13B23EC2EC30035AFB7 /* SceneDelegate.swift in Sources */,
 				714DF13D23EC2EC30035AFB7 /* FeederView.swift in Sources */,
@@ -289,6 +309,7 @@
 				DEVELOPMENT_TEAM = 6EL5V5QVB4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "FeedTheCat-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -309,6 +330,7 @@
 				DEVELOPMENT_TEAM = 6EL5V5QVB4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "FeedTheCat-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

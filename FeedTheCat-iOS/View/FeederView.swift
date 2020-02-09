@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct FeederView: View {
-    @Binding var isReachable: Bool
+    let isReachable: Bool
 
     private let mainColor = Color("MainFeeder")
     private let secondColor = Color("SecondaryFeeder")
@@ -23,7 +23,6 @@ struct FeederView: View {
                 self.bottom.frame(height: proxy.size.height * 0.45)
             }
         }
-        .preferredColorScheme(.light)
         .drawingGroup()
     }
 
@@ -139,10 +138,10 @@ struct FeederView: View {
 struct FeederView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeederView(isReachable: .constant(false))
+            FeederView(isReachable: false)
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
-            FeederView(isReachable: .constant(true))
+            FeederView(isReachable: true)
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
         }
