@@ -94,17 +94,7 @@ struct MainButtonStyle: ButtonStyle {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            FeedView()
-                .accentColor(.orange)
-                .previewDevice(PreviewDevice(stringLiteral: "iPhone SE"))
-                .preferredColorScheme(.dark)
-            FeedView()
-                .accentColor(.orange)
-                .previewDevice(PreviewDevice(stringLiteral: "iPhone 8"))
-            FeedView()
-                .accentColor(.orange)
-                .previewDevice(PreviewDevice(stringLiteral: "iPhone 11"))
-        }
+        FeedView()
+            .accentColor(.orange)
     }
 }
