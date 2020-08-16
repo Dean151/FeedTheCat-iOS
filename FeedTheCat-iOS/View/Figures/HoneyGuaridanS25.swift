@@ -1,5 +1,5 @@
 //
-//  FeederView.swift
+//  HoneyGuaridanS25.swift
 //  FeedTheCat-iOS
 //
 //  Created by Thomas DURAND on 06/02/2020.
@@ -8,12 +8,8 @@
 
 import SwiftUI
 
-struct FeederView: View {
+struct HoneyGuaridanS25: View {
     let isReachable: Bool
-
-    private let mainColor = Color("MainFeeder")
-    private let secondColor = Color("SecondaryFeeder")
-    private let thirdColor = Color("TertiaryFeeder")
 
     var body: some View {
         GeometryReader { proxy in
@@ -29,7 +25,7 @@ struct FeederView: View {
     private var top: some View {
         GeometryReader { proxy in
             RoundedRectangle(cornerRadius: proxy.size.width * 0.025)
-                .fill(self.mainColor)
+                .fill(Color.feederPrimary)
         }
     }
 
@@ -51,7 +47,7 @@ struct FeederView: View {
     private var bottom: some View {
         GeometryReader { proxy in
             VStack(spacing: proxy.size.height * 0.0075) {
-                ZStack {
+                ZStack(alignment: Alignment(horizontal: .center, vertical: .center)) {
                     self.top
                     self.drawer
                 }
@@ -77,7 +73,7 @@ struct FeederView: View {
                 path.addLine(to: .init(x: frame.size.width - amount, y: frame.size.height / 2))
                 path.addLine(to: .init(x: frame.size.width, y: 0))
             }
-            .fill(self.thirdColor)
+            .fill(Color.feederThird)
         }
     }
 
@@ -103,7 +99,7 @@ struct FeederView: View {
                 path.addLine(to: .init(x: frame.size.width - amount, y: frame.size.height))
                 path.addQuadCurve(to: .init(x: frame.size.width, y: 0), control: .init(x: frame.size.width, y: frame.size.height))
             }
-            .fill(self.mainColor)
+            .fill(Color.feederPrimary)
         }
     }
 
@@ -117,31 +113,31 @@ struct FeederView: View {
 
     private var button: some View {
         Circle()
-            .fill(self.mainColor)
+            .fill(Color.feederPrimary)
     }
 
     private var drawer: some View {
         GeometryReader { proxy in
             Rectangle()
-                .fill(self.secondColor)
+                .fill(Color.feederSecond)
                 .frame(width: proxy.size.width * 0.7, height: proxy.size.height * 0.25)
-                .offset(y: proxy.size.height * 0.25)
+                .offset(x: proxy.size.width * 0.15, y: proxy.size.height * 0.65)
         }
     }
 
     private var foot: some View {
         Capsule()
-            .fill(self.secondColor)
+            .fill(Color.feederSecond)
     }
 }
 
-struct FeederView_Previews: PreviewProvider {
+struct HoneyGuaridanS25_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeederView(isReachable: false)
+            HoneyGuaridanS25(isReachable: false)
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
-            FeederView(isReachable: true)
+            HoneyGuaridanS25(isReachable: true)
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
         }
