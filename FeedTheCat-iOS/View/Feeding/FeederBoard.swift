@@ -16,7 +16,7 @@ struct FeederBoard: View {
     @ObservedObject var feeder: Feeder
 
     @State private var state: FeederState = .unknown
-    let timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 15, on: .main, in: .common).autoconnect()
     
     @State private var amount = 5
     @State private var confirmFeeding = false
@@ -32,6 +32,7 @@ struct FeederBoard: View {
     func updateFeederState() {
         os_log("Will check state for feeder: %d", type: .debug, feeder.id)
         appState.checkFeederStatus(feeder: feeder, updated: {
+            if case .unknown = $0 { return }
             self.state = $0
             os_log("Retreived state for feeder: %d -> %@", type: .debug, feeder.id, $0)
         })
