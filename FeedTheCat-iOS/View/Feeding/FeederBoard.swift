@@ -70,7 +70,7 @@ struct FeederBoard: View {
                     HStack {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .renderingMode(.original)
-                        Text("The feeder never reached our servers")
+                        Text("The feeder have never been up!")
                             .foregroundColor(.secondary)
                     }
                 }

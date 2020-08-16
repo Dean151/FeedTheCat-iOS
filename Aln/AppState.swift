@@ -205,7 +205,8 @@ extension FeederState: Decodable {
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let available: Bool = try values.decode(Bool.self, forKey: .isAvailable)
-        self = available ? .available : .notAvailable(lastReachDate: nil)
+        let reachDate: Date? = try? values.decode(Date.self, forKey: .lastResponded)
+        self = available ? .available : .notAvailable(lastReachDate: reachDate)
     }
 }
 extension FeederState: CVarArg {
