@@ -55,16 +55,18 @@ struct FeederSettings: View {
                             .multilineTextAlignment(.trailing)
                     }
                     HStack {
-                        #warning("FIXME: The label is truncated in ENG")
                         Text("Regular meal amount")
                             .lineLimit(1)
                         Spacer(minLength: 0)
                         AmountPicker("42", amount: $values.defaultAmount)
+                            .frame(maxWidth: 100) // Nasty way to prevent truncation of the label
                     }
                 }
 
                 #warning("FIXME: Cannot scroll to last row when keyboard is up")
-                planningSection
+                Section(header: planResume) {
+                    planningSection
+                }
             }
             .disabled(isSaving)
             .navigationTitle("Feeder settings")
@@ -102,39 +104,42 @@ struct FeederSettings: View {
         return formatter
     }()
 
-    func planResume(for plan: ScheduledFeedingPlan) -> Text {
-        Text("\(plan.countEnabled) meals — \(massFormatter.string(fromValue: Double(plan.amount), unit: .gram))")
+    var planResume: some View {
+        if let planning = values.planning {
+            switch planning {
+            case .success(let plan):
+                return Text("Feeding plan (\(plan.countEnabled) meals — \(massFormatter.string(fromValue: Double(plan.amount), unit: .gram)))")
+            case .failure:
+                return Text("Feeding plan")
+            }
+        } else {
+            return Text("Feeding plan")
+        }
     }
 
     @ViewBuilder
     var planningSection: some View {
         if let planning = values.planning {
             switch planning {
-            case .success(let plan):
-                Section(header: Text("Feeding plan (\(planResume(for: plan)))")) {
-                    PlanningList(planning: $values.underlyingPlanning, defaultAmount: values.defaultAmount)
-                }
+            case .success:
+                PlanningList(planning: $values.underlyingPlanning, defaultAmount: values.defaultAmount)
             case .failure:
-                Section(header: Text("Feeding plan")) {
-                    HStack {
-                        Spacer()
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .renderingMode(.original)
-                        Text("Couldn't load current feeding plan")
-                            .foregroundColor(.secondary)
-                        Spacer()
-                    }
+                HStack {
+                    Spacer()
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .renderingMode(.original)
+                    Text("Couldn't load current feeding plan")
+                        .foregroundColor(.secondary)
+                    Spacer()
                 }
             }
         } else {
-            Section(header: Text("Feeding plan")) {
-                HStack(spacing: 8) {
-                    Spacer()
-                    ProgressView()
-                    Text("Loading…")
-                        .foregroundColor(.gray)
-                    Spacer()
-                }
+            HStack(spacing: 8) {
+                Spacer()
+                ProgressView()
+                Text("Loading…")
+                    .foregroundColor(.gray)
+                Spacer()
             }
         }
     }

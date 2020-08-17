@@ -59,10 +59,13 @@ struct FeederBoard: View {
         VStack {
             Spacer()
 
-            HoneyGuaridanS25(isReachable: state.isReachable)
-                .aspectRatio(360/560, contentMode: .fit)
-                .padding(.horizontal, 66)
-                .opacity(state.isReachable ? 1 : 0.33)
+            GeometryReader { proxy in
+                HoneyGuaridanS25(isReachable: state.isReachable)
+                    .opacity(state.isReachable ? 1 : 0.33)
+                    .onChange(of: proxy.frame(in: .global).center) { center = $0 }
+            }
+            .aspectRatio(360/560, contentMode: .fit)
+            .padding(.horizontal, 66)
             if case let .notAvailable(lastReachDate: date) = state {
                 if let date = date {
                     Label("Last uptime \(date, formatter: relativeFormatter)", systemImage: "bolt.horizontal")
@@ -165,11 +168,34 @@ struct FeederBoard: View {
         }
     }
 
-    @GestureState private var isDragging = false
+    @State private var center: CGPoint = .zero
+    @State private var clockwizeTours = 0
+    @State private var previousAmount: Int?
+    @State private var previousLocation: CGPoint?
     var circularGesture: some Gesture {
         DragGesture()
-            .onChanged { _ in
-                #warning("TODO: re-implement circular gesture here!")
+            .onChanged { value in
+                if previousAmount == nil {
+                    previousAmount = amount
+                }
+                if let previousLocation = previousLocation {
+                    let diff = Geometry.angle(between: value.location, and: previousLocation, with: center)
+                    if abs(diff) > .pi {
+                        if diff > 0 {
+                            clockwizeTours += 1
+                        } else {
+                            clockwizeTours -= 1
+                        }
+                    }
+                }
+                let angle = (2 * .pi * CGFloat(clockwizeTours)) + Geometry.angle(between: value.startLocation, and: value.location, with: center)
+                amount = max(Amount.min, min(Amount.max, previousAmount! + Int((angle * 50) / (2 * .pi))))
+                previousLocation = value.location
+            }
+            .onEnded { _ in
+                clockwizeTours = 0
+                previousLocation = nil
+                previousAmount = nil
             }
     }
 
