@@ -30,7 +30,7 @@ public class AppState: NSObject, ObservableObject {
     private init(state: LoginState? = nil) {
         self.state = state ?? .loading
         self.monitor = NWPathMonitor()
-        self.networking = Networking(baseUrl: URL(string: "https://alnpetdev.thomasdurand.fr")!)
+        self.networking = Networking(baseUrl: URL(string: "https://alnpet.thomasdurand.fr")!)
         super.init()
         monitor.pathUpdateHandler = { [weak self] path in
             if path.status != .satisfied {

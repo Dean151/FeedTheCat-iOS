@@ -46,7 +46,7 @@ struct FeederSettings: View {
             Form {
                 Section(
                     header: Text("My cat"),
-                    footer: Text("Default meal amount is the amount of food given when pressing the physical button of the feeder.")
+                    footer: Text("Regular meal amount is the amount of food given when pressing the physical button of the feeder.")
                 ) {
                     HStack {
                         Text("Name")
@@ -56,7 +56,7 @@ struct FeederSettings: View {
                     }
                     HStack {
                         #warning("FIXME: The label is truncated in ENG")
-                        Text("Default meal amount")
+                        Text("Regular meal amount")
                             .lineLimit(1)
                         Spacer(minLength: 0)
                         AmountPicker("42", amount: $values.defaultAmount)
