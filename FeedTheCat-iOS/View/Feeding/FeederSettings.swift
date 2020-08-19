@@ -63,7 +63,6 @@ struct FeederSettings: View {
                     }
                 }
 
-                #warning("FIXME: Cannot scroll to last row when keyboard is up")
                 Section(header: planResume) {
                     planningSection
                 }
@@ -243,7 +242,6 @@ struct MealRow: View {
             DatePicker("Meal time", selection: $meal.time.date, displayedComponents: [.hourAndMinute])
                 .datePickerStyle(GraphicalDatePickerStyle())
                 .labelsHidden()
-                .frame(minHeight: 44)
             Spacer(minLength: 0)
             AmountPicker("Meal amount", amount: $meal.amount.value)
                 .labelsHidden()
