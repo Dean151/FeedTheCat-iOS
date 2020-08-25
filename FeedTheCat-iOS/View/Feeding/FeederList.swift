@@ -13,20 +13,36 @@ struct FeederList: View {
     let feeders: [Feeder]
 
     @State private var selection: Int = 0
+    @State private var refresh: Int = 0
 
-    var title: LocalizedStringKey {
+    var currentFeeder: Feeder? {
         if selection >= feeders.count {
+            return nil
+        }
+        return feeders[selection]
+    }
+
+    #warning("FIXME: Name is not refreshed when updating from settings.")
+    var title: LocalizedStringKey {
+        guard let feeder = currentFeeder else {
             return "Add a new feeder"
         }
-        if let name = feeders[selection].name {
-            #warning("FIXME: Name is not refreshed when updating from settings.")
+        if let name = feeder.name {
             return "\(name)'s Feeder"
         }
         return "Cat feeder"
     }
 
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack {
+            // WORKAROUND for having always big title with vertical scroll on pagetab
+            NavigationView {
+                ZStack {
+                    EmptyView()
+                }
+                .navigationTitle(title)
+            }
+
             #warning("TODO: When no feeder, undefined behavior, should propose feeder association instead")
             TabView(selection: $selection) {
                 ForEach(feeders.indices) { index in
@@ -35,30 +51,7 @@ struct FeederList: View {
             }
             .tabViewStyle(PageTabViewStyle())
             .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-
-            ZStack(alignment: .top) {
-                Rectangle()
-                    .fill(LinearGradient(gradient:
-                        Gradient(stops: [
-                            .init(color: .background, location: 0),
-                            .init(color: .background, location: 0.85),
-                            .init(color: Color.background.opacity(0), location: 1)
-                        ]), startPoint: .top, endPoint: .bottom)
-                    )
-                    .ignoresSafeArea(.container, edges: .top)
-                    .frame(height: 60)
-                HStack {
-                    Text(title)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .lineLimit(1)
-                        .multilineTextAlignment(.leading)
-                        .padding(.top)
-                        .padding(.horizontal, 24)
-                        .animation(.none)
-                    Spacer()
-                }
-            }
+            .padding(.top, 100)
         }
     }
 }

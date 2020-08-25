@@ -101,7 +101,7 @@ struct FeederBoard: View {
         }
         .gesture(circularGesture)
         .padding(.horizontal, 24)
-        .padding(.vertical, 50)
+        .padding(.bottom, 50)
         .sheet(isPresented: $showSettings) {
             FeederSettings(feeder: feeder)
                 .accentColor(.accent)
