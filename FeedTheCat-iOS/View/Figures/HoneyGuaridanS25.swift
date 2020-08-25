@@ -6,10 +6,18 @@
 //  Copyright © 2020 Thomas DURAND. All rights reserved.
 //
 
+import Aln
 import SwiftUI
 
 struct HoneyGuaridanS25: View {
-    let isReachable: Bool
+    let state: FeederState
+
+    init() {
+        state = .notAvailable(lastReachDate: nil)
+    }
+    init(state: FeederState) {
+        self.state = state
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -81,9 +89,9 @@ struct HoneyGuaridanS25: View {
         GeometryReader { proxy in
             ZStack {
                 self.indicatorBackground
-                self.indicator(color: .red, proxy: proxy, isActive: self.isReachable)
+                self.indicator(color: .red, proxy: proxy, isActive: state.isReachable)
                     .offset(x: -proxy.size.width * 0.25)
-                self.indicator(color: .green, proxy: proxy, isActive: self.isReachable)
+                self.indicator(color: .green, proxy: proxy, isActive: state.isReachable)
                     .offset(x: proxy.size.width * 0.25)
             }
         }
@@ -134,13 +142,15 @@ struct HoneyGuaridanS25: View {
 struct HoneyGuaridanS25_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            HoneyGuaridanS25(isReachable: false)
+            HoneyGuaridanS25()
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
-            HoneyGuaridanS25(isReachable: true)
+            HoneyGuaridanS25(state: .available)
+                .padding()
+                .previewLayout(.fixed(width: 360, height: 560))
+            HoneyGuaridanS25(state: .unknown)
                 .padding()
                 .previewLayout(.fixed(width: 360, height: 560))
         }
-
     }
 }

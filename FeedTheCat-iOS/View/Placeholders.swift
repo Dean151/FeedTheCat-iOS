@@ -33,7 +33,7 @@ struct NoInternet: View {
         NavigationView {
             VStack(spacing: 32) {
                 ZStack {
-                    HoneyGuaridanS25(isReachable: false)
+                    HoneyGuaridanS25()
                         .aspectRatio(360/560, contentMode: .fit)
                         .padding(.horizontal, 66)
                         .opacity(0.33)

@@ -60,7 +60,7 @@ struct FeederBoard: View {
             Spacer()
 
             GeometryReader { proxy in
-                HoneyGuaridanS25(isReachable: state.isReachable)
+                HoneyGuaridanS25(state: state)
                     .opacity(state.isReachable ? 1 : 0.33)
                     .onChange(of: proxy.frame(in: .global).center) { center = $0 }
             }
