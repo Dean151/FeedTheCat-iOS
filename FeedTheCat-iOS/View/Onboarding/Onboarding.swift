@@ -77,7 +77,7 @@ struct LoginForm_Previews: PreviewProvider {
     }
 }
 
-struct AssociateFeeder: View {
+struct AssociateFeederStart: View {
     var body: some View {
         VStack {
             Spacer()
@@ -105,10 +105,10 @@ struct AssociateFeeder: View {
     }
 }
 
-struct AssociateFeeder_Previews: PreviewProvider {
+struct AssociateFeederStart_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AssociateFeeder()
+            AssociateFeederStart()
         }.accentColor(.accent)
     }
 }

@@ -25,7 +25,7 @@ struct FeederList: View {
     #warning("FIXME: Name is not refreshed when updating from settings.")
     var title: LocalizedStringKey {
         guard let feeder = currentFeeder else {
-            return "Add a new feeder"
+            return "Misc settings"
         }
         if let name = feeder.name {
             return "\(name)'s Feeder"
@@ -43,14 +43,20 @@ struct FeederList: View {
                 .navigationTitle(title)
             }
 
-            #warning("TODO: When no feeder, undefined behavior, should propose feeder association instead")
-            TabView(selection: $selection) {
-                ForEach(feeders.indices) { index in
-                    FeederBoard(feeder: feeders[index]).tag(index)
+            Group {
+                if feeders.isEmpty {
+                    AssociateFeederStart()
+                } else {
+                    TabView(selection: $selection) {
+                        ForEach(feeders.indices) { index in
+                            FeederBoard(feeder: feeders[index]).tag(index)
+                        }
+                        AdminMenu().tag(feeders.count)
+                    }
+                    .tabViewStyle(PageTabViewStyle())
+                    .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
                 }
             }
-            .tabViewStyle(PageTabViewStyle())
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
             .padding(.top, 100)
         }
     }
