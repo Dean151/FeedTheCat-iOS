@@ -193,12 +193,8 @@ struct PlanningList: View {
     let defaultAmount: Int
 
     var body: some View {
-        ForEach(planning) { meal in
-            if let index = planning.firstIndex(of: meal), let $meal = Binding($planning[safely: index]) {
-                MealRow(meal: $meal)
-            } else {
-                EmptyView()
-            }
+        ForEach($planning) { $meal in
+            MealRow(meal: $meal)
         }
         .onDelete(perform: { indexSet in
             planning.remove(atOffsets: indexSet)

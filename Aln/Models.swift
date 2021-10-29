@@ -106,7 +106,7 @@ public struct ScheduledFeedingPlan: Codable {
 }
 
 /// Array like behaviors
-extension ScheduledFeedingPlan {
+extension ScheduledFeedingPlan: MutableCollection {
     public subscript(index: Int) -> ScheduledMeal {
         get {
             return meals[index]
